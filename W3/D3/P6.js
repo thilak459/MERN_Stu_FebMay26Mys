@@ -14,6 +14,7 @@ const student={
     }
 };
 console.log(student.fullname());
+student.greet();
 
 // console.log(student.scores.math);
 // console.log(student.hobbies);
