@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <header>
+        <nav>
+           <center> <a href="#home" class="logo"><img src="logo.jpg" alt="" class="log"></a></center>
+            <ul class="border-2">
+                <li><a href="#home"><div class="p-2 m-2 bg-red-200 border rounded-full">Home</div></a></li>
+                <li><a href="#about"><div class="p-2 m-2 bg-red-200 border rounded-full">About</div></a></li>
+                <li><a href="#skills"><div class="p-2 m-2 bg-red-200 border rounded-full">Skills</div> </a></li>
+                <li><a href="#projects"><div class="p-2 m-2 bg-red-200 border rounded-full">Projects</div></a></li>
+                <li><a href="#contact"><div class="p-2 m-2 bg-red-200 border rounded-full">Contact</div></a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Flexbox layout : Hero section-->
+    <center><section id="home" class="bg-blue-200">
+        <h1 class="text-bold bg-blue-500 text-center border-2">Thilak T M</h1>
+        <img src="myphoto.jpeg" alt="My photo" class="h-50 ">
+        <p class="bg-blue-300">Software developer <br>MERN Stack|DevOps</p>
+        <a href="#contact" class="bg-purple-500 border-3 rounded-full">Contact Me</a>
+    </section></center>
+    <!-- About section -->
+    <section class="bg-red-100">
+        <h2 class="bg-blue-500">About Me</h2>
+        <article class="about">
+            <h3 class="border-2 bg-red-200">Full Stack Developer</h3>
+            <p>Experience in web develpment and hosting.
+                Specialized in Finance-Domain projects.
+            </p>
+            <div class="tags">
+                <span class="tag">Backend: NodeJS</span>
+                <span class="tag">DB: optimization</span>
+            </div>
+        </article><hr
+    </section>
+    <!-- Skills -->
+     <section id="skills">
+        <h3 class="bg-blue-500">My Skills</h3>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h4 class="border-2 bg-red-200">MERN Stack</h4>
+                <p>ReactJS, NodeJS, ExpressJS, MangoDB</p>
+            </div>
+        </div>
+     </section><hr>
+     <!-- Projects -->
+      <section id="projects">
+        <h3 class="bg-blue-500">My Projects</h3>
+        <div class="projects-container">
+            <div class="projects-content">
+                <h4 class="border-2 bg-red-200">gola</h4>
+                <p>Rapid way to book a cab hassle free</p>
+                <a href="https://www.gola.com" target="_blank" class="bg-purple-500 border-3 rounded-full">View</a>
+            </div>
+        </div>
+        <table border="1" class="border-2">
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th colspan="2">Technology</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>AWS for hosting</td>
+                    <td>MERN</td>
+                    <td>Redis</td>
+                </tr>
+            </tbody>
+        </table><hr
+      </section>
+      <!-- Contact me -->
+       <section id="contact">
+        <h3 class="bg-blue-500">Contact Me</h3>
+        <center><form class="border-2">
+            <fieldset>
+                <center><legend class="border-2 bg-red-200">Contact Form</legend></center>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" placeholder="Name" class="border-2" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="email" class="border-2" required>
+                </div>
+                <div class="form-group">
+                    <select name="type" class="border-2">
+                        <option value="fte">FTE</option>
+                        <option value="consultant">Consultant</option>
+                    </select>
+                </div>
+            </fieldset>
+            <button type="submit" class="bg-purple-500 border-3 rounded-full"> Send </button>
+        </form></center>
+    </section>
+</body>
+</html>
