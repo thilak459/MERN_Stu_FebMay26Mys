@@ -1,25 +1,25 @@
-function renderProject(){
+function renderProject() {
     const projectContainer = document.getElementById("projects-container");
 
-    if(!projectContainer){
+    if (!projectContainer) {
         console.log("Projects not found");
         return;
     }
     projectContainer.innerHTML = "";
-    projectsData.forEach(function(project){
+    projectsData.forEach(function (project) {
         const card = document.createElement("div");
-        card.className = "p-8 text-center bg-white rounded-3xl shadow-lg";
+        card.className = "hover:bg-green-100 shadow-lg hover:shadow-2xl rounded-3xl p-8 transition-all duration-500 hover:-translate-y-3 overflow-hidden border ";
 
         const projectName = document.createElement("h3");
-        projectName.className = "text-xl font-bold mb-2 text-blue-500";
+        projectName.className = "text-2xl font-bold group-hover: text-slate-600 flex justify-center";
         projectName.textContent = project.name;
 
         const projectCategory = document.createElement("p");
-        projectCategory.className ="text-xl font-semibold";
+        projectCategory.className = "text-lg font-semibold flex justify-center";
         projectCategory.textContent = project.category;
 
         const projectDescription = document.createElement("p");
-        projectDescription.classList ="text-sm";
+        projectDescription.classList = "text-sm ";
         projectDescription.textContent = project.description;
 
         const projectTechnologies = document.createElement("p");
@@ -41,17 +41,37 @@ function renderProject(){
         projectGit.classList = "bg-gray-700 hover:bg-black text-white hover:shadow-lg rounded transition-all duration-300 px-8 py-3";
         projectGit.textContent = "Github";
 
+        const likeBtn = document.createElement("button");
+        likeBtn.classList = "flex"
+        likeBtn.textContent = "❤️"
+
+        const span = document.createElement("span");
+        span.textContent = "0"
+
+        card.appendChild(projectStatus);
+        card.appendChild(likeBtn);
+        likeBtn.appendChild(span);
         card.appendChild(projectName);
         card.appendChild(projectCategory);
         card.appendChild(projectDescription);
         card.appendChild(projectTechnologies);
-        card.appendChild(projectStatus);
 
         card.appendChild(btnContainer);
         btnContainer.appendChild(projectDemo);
         btnContainer.appendChild(projectGit);
 
         projectContainer.appendChild(card);
+
+        likeBtn.addEventListener("click", function () {
+
+            const count = parseInt(span.textContent);
+            if (count < 1) {
+                span.textContent = count + 1;
+            }
+            else {
+                alert("You already liked that project");
+            }
+        })
 
     });
 }
