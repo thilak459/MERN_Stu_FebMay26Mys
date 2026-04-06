@@ -1,5 +1,4 @@
 // This file stores the movie data used in the CLI App
-
 const movies = [
     {
         id:1,
@@ -30,4 +29,4 @@ const movies = [
     }
 ];
 // Export the movie data so that other files can use it.
-module.export = movies;
+module.exports = movies;
