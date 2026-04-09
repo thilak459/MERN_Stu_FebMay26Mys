@@ -62,7 +62,7 @@ function addMovie(req,res,next){
         showtimes:showtimes || []
     }
     movies.push(newMovie);
-    req.status(201).json({
+    res.status(201).json({
         success:true,
         message:"Movie added successfully",
         data:newMovie
