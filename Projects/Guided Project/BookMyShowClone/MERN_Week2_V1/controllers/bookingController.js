@@ -22,7 +22,7 @@ function createBooking(req,res,next){
             return next(new CustomError("Movie not found",404));
         }
 
-        const showtime = movies.showtimes.find((s)=>s.id === Number(showtimeId));
+        const showtime = movie.showtimes.find((s)=>s.id === Number(showtimeId));
         if(!showtime){
             return next(new CustomError("Showtime not found",404));
         }
