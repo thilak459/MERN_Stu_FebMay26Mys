@@ -30,7 +30,7 @@ async function runSaveHookDemo(){
 
         await mongoose.connection.close();
         console.log("Connnection closed");
-    }catch(erro){
+    }catch(error){
         console.log("Save hook demo error:",error.message);
     }
 }
