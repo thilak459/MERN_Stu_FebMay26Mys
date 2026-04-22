@@ -9,7 +9,7 @@ exports.generateOTP = async(email) => {
 
     const expiresAt = new Date(Date.now() + 5*60*1000);
 
-    await create({
+    await OTP.create({
         email,
         otp:hashedOTP,
         expiresAt,
