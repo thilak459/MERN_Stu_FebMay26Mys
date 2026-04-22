@@ -7,3 +7,4 @@ const {protect} = require("../middleware/auth.middleware");
 router.post("/",protect,(req,res)=>{
     res.send("Create booking");
 });
+module.exports = router;
