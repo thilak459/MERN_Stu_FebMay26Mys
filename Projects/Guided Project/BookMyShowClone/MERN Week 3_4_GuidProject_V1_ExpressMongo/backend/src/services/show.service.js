@@ -1,5 +1,5 @@
 const Show = require("../models/Show");
-const movie = require("../models/Movie");
+const Movie = require("../models/Movie");
 
 // Generate Seats
 const generateSeats = (totalSeats) =>{
