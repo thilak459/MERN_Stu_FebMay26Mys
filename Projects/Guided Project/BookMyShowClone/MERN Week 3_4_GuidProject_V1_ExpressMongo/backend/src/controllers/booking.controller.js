@@ -33,7 +33,7 @@ exports.getMyBooking = async (req,res,next) => {
 };
 
 // Delete booking
-exports.deleteBooking = async (req,res,next) => {
+exports.cancelBooking = async (req,res,next) => {
     try{
         await bookingService.cancelBooking(
             req.params.id,
