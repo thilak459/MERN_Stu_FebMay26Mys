@@ -27,7 +27,7 @@ const movieSchema = new mongoose.Schema({
         required:[true,"Duration is required"],
     },
     releaseDate:{
-        type:date,
+        type:Date,
         required:[true,"Release date is required"],
         index:true
     },
