@@ -10,7 +10,7 @@ export class ClassComponentsBasics extends Component{
         return(
             <>
                 <h2>Class Components</h2>
-                <p>Class components use render() and support lifecycle methods.</p>
+                <p>Class components use render() and support lifecycle methods.git  </p>
             </>
         )
     }
