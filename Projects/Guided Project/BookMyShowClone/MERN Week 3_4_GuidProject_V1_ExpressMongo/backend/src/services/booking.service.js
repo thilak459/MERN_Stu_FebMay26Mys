@@ -1,6 +1,6 @@
 const Booking = require("../models/Booking");
-
 const Show = require("../models/Show");
+const CustomError = require("../utils/customError");
 
 //Create Booking
 exports.createBooking = async(userId,{showId,seats})=>{
@@ -8,19 +8,19 @@ exports.createBooking = async(userId,{showId,seats})=>{
     const show = await Show.findById(showId);
 
     if(!show){
-        throw new Error("Show not found");
+        throw new CustomError("Show not found", 404);
         
     }
     // 2. validate seats
     const selectedSeats = show.seats.filter((seat)=>seats.includes(seat.seatNumber));
     if(selectedSeats.length!=seats.length){
-        throw new Error("seats do not exist");
+        throw new CustomError("Some seats do not exist", 400);
     }
 
     //3. check if already booked
     for(let seat of selectedSeats){
         if(seat.isBooked){
-            throw new Error(`Seat ${seat.seatNumber} is already booked`); 
+            throw new CustomError(`Seat ${seat.seatNumber} is already booked`,409); 
         }
     }
 
@@ -84,14 +84,14 @@ exports.getUserBookings = async(userId)=>{
 exports.cancelBooking = async(bookingId,userId)=>{
     const booking = await Booking.findById(bookingId);
     if(!booking)
-        throw new Error("Booking not found");
+        throw new CustomError("Booking not found",404);
 
     if(booking.userId.toString()!==userId.toString()){
-        throw new Error("Unauthorized");  
+        throw new CustomError("Unauthorized",401);  
     }
 
     if(booking.status === "cancelled"){
-        throw new Error("Already cancelled.");
+        throw new CustomError("Already cancelled",409);
     }
     //1. get show
     const show = await Show.findById(booking.showId);

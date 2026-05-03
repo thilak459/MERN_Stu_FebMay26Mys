@@ -3,13 +3,14 @@ const OTP = require("../models/OTP");
 const otpService = require("./otp.service");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const CustomError = require("../utils/customError");
 
 // Register user
 exports.registerUser = async ({name,email,password}) =>{
     const existingUser = await User.findOne({email});
 
     if(existingUser){
-        throw new Error("User already exists");
+        throw new CustomError("User already exists",409);
     }
 
     const user = await User.create({
@@ -28,7 +29,7 @@ exports.verifyOTP = async({email,otp})=>{
     const record = await OTP.findOne({email}).select("+otp");
 
     if(!record){
-        throw new Error("OTP expired or not found");
+        throw new CustomError("OTP expired or not found",410);
     }
 
     const isMatch = await bcrypt.compare(otp,record.otp);
@@ -36,7 +37,7 @@ exports.verifyOTP = async({email,otp})=>{
     if(!isMatch){
         record.attempts +=1;
         await record.save();
-        throw new Error("Invalid OTP");
+        throw new CustomError("Invalid OTP",400);
     }
 
     await User.updateOne({email},{isVerified:true});
@@ -48,15 +49,15 @@ exports.loginUser = async ({email,password}) =>{
     const user = await User.findOne({email}).select("+password");
 
     if(!user){
-        throw new Error("User not found");
+        throw new CustomError("User not found",400);
     }
     if(!user.isVerified){
-        throw new Error("User not verified");
+        throw new CustomError("User not verified",403);
     }
     const isMatch = await user.comparePassword(password);
 
     if(!isMatch){
-        throw new Error("Invalid credentials");
+        throw new CustomError("Invalid credentials",401);
     }
 
     const token = jwt.sign(
