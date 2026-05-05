@@ -1,6 +1,6 @@
 // Prop validation
 import {PropTypes} from "prop-types";
-function Profile({name,age}){
+function Profile({name="Thilak",age=22}){
     return(
         <div className="card">
             <p>{name}</p>
@@ -15,7 +15,7 @@ Profile.propTypes = {
 export function PropTypesDemo(){
     return(
         <>
-            <Profile name="Thilak" age={21} />
+            <Profile />
         </>
     );
 }
