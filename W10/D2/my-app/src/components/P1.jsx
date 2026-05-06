@@ -7,7 +7,8 @@
     // - logged-in user details
     // - language settings
     // - app settings
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect} from "react";
+import { useDocumentTitle } from "./P2";
 // Basic Steps:
 // 1. Create a context
 // 2. Wrap components with provider
@@ -58,7 +59,7 @@ function Layout(){
 export function UseContextIntro(){
     // Shared state
     const [theme,setTheme] = useState('light');
-
+    useDocumentTitle('UseContext example');
     const toggleTheme = () => {
         setTheme(theme === 'light' ? 'dark' : 'light');
     };
