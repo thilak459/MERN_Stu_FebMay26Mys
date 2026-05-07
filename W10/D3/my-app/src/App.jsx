@@ -5,6 +5,7 @@ import { PassingArguments } from './components/P3'
 import { UseCallbackEvents } from './components/P5'
 import { EventDeligation } from './components/P6'
 import { FormsPattern } from './components/P7'
+import { KeyboardEvent } from './components/P8'
 
 function App() {
 
@@ -15,7 +16,8 @@ function App() {
       {/* <PassingArguments/> */}
       {/* <UseCallbackEvents /> */}
       {/* <EventDeligation/> */}
-      <FormsPattern/>
+      {/* <FormsPattern/> */}
+      <KeyboardEvent/>
     </>
   )
 }
