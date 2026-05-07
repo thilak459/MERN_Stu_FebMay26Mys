@@ -4,6 +4,7 @@ import { EventObject } from './components/P2'
 import { PassingArguments } from './components/P3'
 import { UseCallbackEvents } from './components/P5'
 import { EventDeligation } from './components/P6'
+import { FormsPattern } from './components/P7'
 
 function App() {
 
@@ -13,7 +14,8 @@ function App() {
       {/* <EventObject/> */}
       {/* <PassingArguments/> */}
       {/* <UseCallbackEvents /> */}
-      <EventDeligation/>
+      {/* <EventDeligation/> */}
+      <FormsPattern/>
     </>
   )
 }
