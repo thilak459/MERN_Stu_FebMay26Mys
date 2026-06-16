@@ -1,25 +1,23 @@
-// src/components/ProtectedRoute.jsx
-
+// src/routes/ProtectedRoute.jsx
 
 /*
 =========================================================
-SPRINT 1 – SHARED INFRASTRUCTURE
+SPRINT 2 – PROTECTED ROUTES
 
 
 TOPICS COVERED:
 
 
-✓ Protected Routes
 ✓ Conditional Rendering
 ✓ Navigate
-✓ Role-Based Authorization
+✓ Authentication Checks
+✓ Authorization Checks
 
 
 WHY THIS COMPONENT?
 
 
-Certain pages should only be accessible
-to authenticated users.
+Some pages require login.
 
 
 Examples:
@@ -32,171 +30,112 @@ Logged-in Users
 
 Admin Dashboard
 ↓
-Admin Users
-
-
-Sprint 1 uses mock values.
-
-
-Real JWT authentication
-arrives in Sprint 2.
+Admin Users Only
 
 
 =========================================================
 */
 
-
 import {
-
-
-    Navigate
-
-
+  Navigate,
+  useLocation,
 } from "react-router-dom";
 
 
+import { useAuth } from "../hooks/useAuth";
+
 export default function ProtectedRoute({
+  children,
 
-
-    children,
-
-
-    requiredRole
-
-
+  roles = [],
 }) {
+  const {
+    isAuthenticated,
+
+    loading,
+
+    user,
+  } = useAuth();
+
+  const location = useLocation();
+  /*
+  ------------------------------------------------
+  SESSION RESTORATION IN PROGRESS
+  ------------------------------------------------
+  */
+
+  if (loading) {
+    return <p>Restoring session...</p>;
+  }
+
+  /*
+  ------------------------------------------------
+  USER NOT LOGGED IN
+  ------------------------------------------------
+  */
+
+  if (!isAuthenticated) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location }}
+      />
+    );
+  }
 
 
-    /*
-    =====================================================
-    MOCK AUTHENTICATION
-  
-  
-    Sprint 2 replaces these values
-    with Context API.
-  
-  
-    =====================================================
-    */
+  /*
+  ------------------------------------------------
+  ROLE CHECK
+  Example:
+  roles = ["admin"]
+  user.role === "user"
+  ↓
+  Redirect
 
 
-    const isAuthenticated = true;
+  ------------------------------------------------
+  */
 
+  if (roles.length > 0 && !roles.includes(user?.role)) {
+    return <Navigate to="/" replace />;
+  }
 
-    const userRole = "admin";
-
-
-    /*
-    =====================================================
-    AUTH CHECK
-    =====================================================
-    */
-
-
-    if (!isAuthenticated) {
-
-
-        return (
-
-
-            <Navigate
-
-
-                to="/login"
-
-
-                replace
-
-
-            />
-
-
-        );
-
-
-    }
-
-
-    /*
-    =====================================================
-    ROLE CHECK
-    =====================================================
-    */
-
-
-    if (
-
-
-        requiredRole &&
-
-
-        requiredRole !== userRole
-
-
-    ) {
-
-
-        return (
-
-
-            <Navigate
-
-
-                to="/"
-
-
-                replace
-
-
-            />
-
-
-        );
-
-
-    }
-
-
-    /*
-    =====================================================
-    ACCESS GRANTED
-    =====================================================
-    */
-
-
-    return children;
-
-
+  return children;
 }
-
 
 /*
 =========================================================
-FLOW
+FLOWS
 
 
-Protected Route
+BOOKINGS
+
+
+User Logged In
 ↓
-Authenticated?
+Allowed
+
+
+Logged Out
 ↓
-No → Login
+Login Page
 
 
-Yes
+
+
+ADMIN
+
+
+Admin
 ↓
-Role Needed?
+Allowed
+
+
+Customer
 ↓
-No → Allow
-
-
-Yes
-↓
-Role Matches?
-↓
-No → Home
-
-
-Yes → Render Page
+Redirect Home
 
 
 =========================================================
@@ -205,18 +144,10 @@ Yes → Render Page
 KEY TAKEAWAYS
 
 
-1. Route protection centralizes logic.
-
-
-2. Authorization is different from
-   authentication.
-
-
-3. Mock values simplify Sprint 1.
-
-
-4. Sprint 2 replaces this with JWT.
-
-
+1. Authentication and authorization
+   are different concepts.
+2. ProtectedRoute centralizes checks.
+3. Session restoration prevents
+   incorrect redirects.
 =========================================================
 */

@@ -196,23 +196,23 @@ FALLBACK
 
 
 export default function AppRoutes() {
-    return (
-        /*
-        =====================================================
-        SUSPENSE
-    
-    
-        Displays fallback UI while lazy
-        components are being downloaded.
-    
-    
-        =====================================================
-        */
+  return (
+    /*
+    =====================================================
+    SUSPENSE
 
 
-        <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
-                {/*
+    Displays fallback UI while lazy
+    components are being downloaded.
+
+
+    =====================================================
+    */
+
+
+    <Suspense fallback={<LoadingSpinner />}>
+      <Routes>
+        {/*
         =================================================
         PUBLIC ROUTES
 
@@ -226,21 +226,21 @@ export default function AppRoutes() {
         */}
 
 
-                <Route element={<PublicLayout />}>
-                    <Route path="/" element={<Home />} />
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Home />} />
 
 
-                    <Route path="/movies" element={<Movies />} />
+          <Route path="/movies" element={<Movies />} />
 
 
-                    <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
 
 
-                    <Route path="/signup" element={<Signup />} />
-                </Route>
+          <Route path="/signup" element={<Signup />} />
+        </Route>
 
 
-                {/*
+        {/*
         =================================================
         USER ROUTES
 
@@ -255,15 +255,18 @@ export default function AppRoutes() {
         =================================================
         */}
 
-                <Route
-                    element={
-                        <ProtectedRoute>
-                            <Bookings />
-                        </ProtectedRoute>
-                    }
-                />
 
-                {/*
+        <Route
+          path="/bookings"
+          element={
+            <ProtectedRoute>
+              <Bookings />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/*
         =================================================
         ADMIN ROUTES
 
@@ -279,15 +282,15 @@ export default function AppRoutes() {
         */}
 
 
-                <Route
-                    path="/admin"
-                    element={
-                        <ProtectedRoute roles={["admin"]}>
-                            <AdminLayout />
-                        </ProtectedRoute>
-                    }
-                >
-                    {/*
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          {/*
           ===============================================
           INDEX ROUTE
 
@@ -301,17 +304,17 @@ export default function AppRoutes() {
           */}
 
 
-                    <Route index element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
 
 
-                    <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
 
 
-                    <Route path="movies" element={<MovieManagement />} />
-                </Route>
+          <Route path="movies" element={<MovieManagement />} />
+        </Route>
 
 
-                {/*
+        {/*
         =================================================
         404 ROUTE
 
@@ -323,10 +326,10 @@ export default function AppRoutes() {
         */}
 
 
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </Suspense>
-    );
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
+  );
 }
 
 

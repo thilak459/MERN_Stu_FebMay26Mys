@@ -1,6 +1,5 @@
 // src/hooks/useAuth.js
 
-
 /*
 =========================================================
 SPRINT 2 – CUSTOM AUTH HOOK
@@ -17,34 +16,22 @@ WHY THIS FILE?
 
 
 Without this:
-
-
-const auth = useContext(AuthContext)
-
-
-must be written everywhere.
-
+const auth = useContext(AuthContext) must be written everywhere.
 
 Instead:
-
-
 const auth = useAuth();
 
 
 =========================================================
 */
 
-
 import { useContext } from "react";
 
-
 import { AuthContext } from "../context/AuthContext";
-
 
 export function useAuth() {
   return useContext(AuthContext);
 }
-
 
 /*
 =========================================================
