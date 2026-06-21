@@ -1,323 +1,201 @@
 // src/pages/admin/MovieManagement.jsx
 
 
-/*
-=========================================================
-SPRINT 1 – MOVIE MANAGEMENT
+import { useEffect, useState } from "react";
 
 
-TOPICS COVERED:
+import {
+  getMovies,
+  createMovie,
+  updateMovie,
+  deleteMovie,
+} from "../../api/movie.api";
 
 
-✓ Rendering Lists
-✓ Reusable Components
-✓ Event Handling
-✓ Conditional UI
-✓ Administrative Interfaces
-
-
-WHY THIS COMPONENT?
-
-
-Administrators need the ability to
-manage movie data.
-
-
-Sprint 1:
-
-
-Administrative Shell
-
-
-Sprint 6:
-
-
-Movie CRUD APIs
-↓
-Poster Upload
-↓
-Validation
-↓
-Pagination
-
-
-=========================================================
-*/
-
-
-const movies = [
-    {
-        id: 1,
-        title: "Interstellar",
-        genre: "Sci-Fi",
-        language: "English",
-    },
-
-
-    {
-        id: 2,
-        title: "Dune",
-        genre: "Sci-Fi",
-        language: "English",
-    },
-
-
-    {
-        id: 3,
-        title: "Kantara",
-        genre: "Action",
-        language: "Kannada",
-    },
-];
+import MovieForm from "../../components/admin/MovieForm";
 
 
 export default function MovieManagement() {
-    function handleAddMovie() {
-        alert("Sprint 6: Add Movie API Integration");
+  const [movies, setMovies] = useState([]);
+
+
+  const [editingMovie, setEditingMovie] = useState(null);
+
+
+  const [loading, setLoading] = useState(false);
+
+
+  const [error, setError] = useState("");
+
+
+  async function loadMovies() {
+    try {
+      setLoading(true);
+
+
+      const response = await getMovies();
+
+
+      setMovies(response.data.movies);
+    } catch (error) {
+      setError(error.response?.data?.message || "Failed to load movies");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
+  useEffect(() => {
+    loadMovies();
+  }, []);
+
+
+  async function handleSubmit(movieData) {
+    try {
+      setError("");
+
+
+      if (editingMovie) {
+        await updateMovie(editingMovie._id, movieData);
+
+
+        setEditingMovie(null);
+      } else {
+        await createMovie(movieData);
+      }
+
+
+      await loadMovies();
+    } catch (error) {
+      setError(error.response?.data?.message || "Movie operation failed");
+    }
+  }
+
+
+  async function handleDelete(movieId) {
+    const confirmed = window.confirm("Delete movie?");
+
+
+    if (!confirmed) {
+      return;
     }
 
 
-    function handleEditMovie(movieId) {
-        alert(`Sprint 6: Edit Movie ${movieId}`);
+    try {
+      await deleteMovie(movieId);
+
+
+      await loadMovies();
+    } catch (error) {
+      setError(error.response?.data?.message || "Delete failed");
     }
+  }
 
 
-    function handleDeleteMovie(movieId) {
-        alert(`Sprint 6: Delete Movie ${movieId}`);
-    }
+  return (
+    <section>
+      <header style={styles.header}>
+        <div>
+          <h1>Movie Management</h1>
 
 
-    return (
-        <section>
-            {/* Header */}
+          <p>Create, update and delete movies.</p>
+        </div>
+      </header>
 
 
-            <header style={styles.header}>
-                <div>
-                    <h1>Movie Management</h1>
+      {error && <p style={styles.error}>{error}</p>}
 
 
-                    <p>Manage movies available on the platform.</p>
-                </div>
+      <MovieForm
+        initialData={editingMovie}
+        onSubmit={handleSubmit}
+        buttonText={editingMovie ? "Update Movie" : "Create Movie"}
+      />
 
 
-                <button style={styles.addButton} onClick={handleAddMovie}>
-                    Add Movie
-                </button>
-            </header>
+      {loading ? (
+        <p>Loading movies...</p>
+      ) : (
+        <div style={styles.tableContainer}>
+          <table style={styles.table}>
+            <thead>
+              <tr>
+                <th>Title</th>
 
 
-            {/* Movie Table */}
+                <th>Genre</th>
 
 
-            <div style={styles.tableContainer}>
-                <table style={styles.table}>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
+                <th>Rating</th>
 
 
-                            <th>Genre</th>
+                <th>Duration</th>
 
 
-                            <th>Language</th>
+                <th>Release Date</th>
 
 
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
 
-                    <tbody>
-                        {movies.map((movie) => (
-                            <MovieRow
-                                key={movie.id}
-                                movie={movie}
-                                onEdit={handleEditMovie}
-                                onDelete={handleDeleteMovie}
-                            />
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            <tbody>
+              {movies.map((movie) => (
+                <tr key={movie._id}>
+                  <td>{movie.title}</td>
 
 
-            {/* Future Enhancements */}
+                  <td>{movie.genre}</td>
 
 
-            <section style={styles.future}>
-                <h2>Upcoming Sprint 6 Enhancements</h2>
+                  <td>{movie.rating}</td>
 
 
-                <ul>
-                    <li>Movie CRUD APIs</li>
+                  <td>{movie.duration} mins</td>
 
 
-                    <li>Poster Uploads</li>
+                  <td>{new Date(movie.releaseDate).toLocaleDateString()}</td>
 
 
-                    <li>Validation</li>
-
-
-                    <li>Pagination</li>
-
-
-                    <li>Search & Filters</li>
-                </ul>
-            </section>
-        </section>
-    );
-}
-
-
-function MovieRow({
-    movie,
-
-
-    onEdit,
-
-
-    onDelete,
-}) {
-    return (
-        <tr>
-            <td>{movie.title}</td>
-
-
-            <td>{movie.genre}</td>
-
-
-            <td>{movie.language}</td>
-
-
-            <td>
-                <button onClick={() => onEdit(movie.id)}>Edit</button>{" "}
-                <button onClick={() => onDelete(movie.id)}>Delete</button>
-            </td>
-        </tr>
-    );
+                  <td>
+                    <button onClick={() => setEditingMovie(movie)}>Edit</button>{" "}
+                    <button onClick={() => handleDelete(movie._id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
+  );
 }
 
 
 const styles = {
-    header: {
-        display: "flex",
+  header: {
+    marginBottom: "30px",
+  },
 
 
-        justifyContent: "space-between",
+  tableContainer: {
+    overflowX: "auto",
+  },
 
 
-        alignItems: "center",
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+    background: "#fff",
+  },
 
 
-        marginBottom: "30px",
-    },
-
-
-    addButton: {
-        padding: "10px 15px",
-
-
-        cursor: "pointer",
-    },
-
-
-    tableContainer: {
-        overflowX: "auto",
-    },
-
-
-    table: {
-        width: "100%",
-
-
-        borderCollapse: "collapse",
-
-
-        background: "#fff",
-    },
-
-
-    future: {
-        marginTop: "35px",
-
-
-        background: "#fff",
-
-
-        border: "1px solid #ddd",
-
-
-        borderRadius: "8px",
-
-
-        padding: "25px",
-    },
+  error: {
+    color: "red",
+    marginBottom: "20px",
+  },
 };
-
-
-/*
-=========================================================
-FLOW
-
-
-Admin
-↓
-Movie Management
-↓
-View Movies
-↓
-Add/Edit/Delete Actions
-↓
-Sprint 6 API Enhancements
-
-
-=========================================================
-
-
-KEY TAKEAWAYS
-
-
-1. Administrative interfaces evolve
-   progressively.
-
-
-2. Tables are common admin patterns.
-
-
-3. Reusable rows improve readability.
-
-
-4. Sprint 6 enhances this page
-   rather than rebuilding it.
-
-
-=========================================================
-
-
-VERIFICATION
-
-
-✓ Movie table renders correctly
-
-
-✓ Add Movie button works
-
-
-✓ Edit button works
-
-
-✓ Delete button works
-
-
-✓ Responsive table works
-
-
-✓ No console errors
-
-
-✓ Sprint 6 ready
-
-
-=========================================================
-*/

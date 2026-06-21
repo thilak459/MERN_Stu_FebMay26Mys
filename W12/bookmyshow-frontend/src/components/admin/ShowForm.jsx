@@ -1,13 +1,31 @@
-import { useState } from "react";
+// MERN_Stu_FebMay26Mys\W12\Master_bookmyshow-frontend\src\components\admin\ShowForm.jsx
+import { useState, useEffect } from "react";
 
 
-export default function ShowForm({ movies, onSubmit }) {
+export default function ShowForm({
+  movies,
+  onSubmit,
+  initialData,
+  buttonText,
+}) {
   const [formData, setFormData] = useState({
     movieId: "",
     date: "",
     time: "",
     totalSeats: 50,
   });
+
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        movieId: initialData.movieId?._id || initialData.movieId,
+        date: initialData.date ? initialData.date.split("T")[0] : "",
+        time: initialData.time || "",
+        totalSeats: initialData.totalSeats || 50,
+      });
+    }
+  }, [initialData]);
 
 
   function handleChange(event) {
@@ -71,7 +89,7 @@ export default function ShowForm({ movies, onSubmit }) {
       />
 
 
-      <button type="submit">Create Show</button>
+      <button type="submit">{buttonText}</button>
     </form>
   );
 }
