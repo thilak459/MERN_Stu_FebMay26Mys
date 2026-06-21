@@ -45,6 +45,7 @@ const showRoutes = require("./src/routes/show.routes");
 const morgan = require("morgan");
 
 const errorMiddleware = require("./src/middleware/error.middleware");
+const adminRoutes = require("./src/routes/admin.routes");
 
 // Initialize app
 const app = express();
@@ -105,6 +106,8 @@ app.use("/api/movies", movieRoutes);
 app.use("/api/bookings", bookingRoutes);
 
 app.use("/api/shows", showRoutes);
+
+app.use("/api/admin", adminRoutes);
 
 /*
 -----------------------------------------
