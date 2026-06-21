@@ -10,6 +10,7 @@ exports.createMovie = async (req, res, next) => {
   try {
     const movie = await movieService.createMovie(req.body);
 
+
     res.status(201).json({
       success: true,
       message: "Movie created successfully",
@@ -19,6 +20,7 @@ exports.createMovie = async (req, res, next) => {
     next(error);
   }
 };
+
 
 /*
 -----------------------------------------
@@ -37,6 +39,26 @@ exports.getMovies = async (req, res, next) => {
     next(error);
   }
 };
+
+
+/*
+-----------------------------------------
+GET MOVIE BY ID
+-----------------------------------------
+*/
+exports.getMovieById = async (req, res, next) => {
+  try {
+    const movie = await movieService.getMovieById(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      data: movie,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 /*
 -----------------------------------------

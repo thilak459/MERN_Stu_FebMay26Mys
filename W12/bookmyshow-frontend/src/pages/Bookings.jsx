@@ -3,145 +3,315 @@
 
 /*
 =========================================================
-SPRINT 1 – BOOKINGS PAGE
+SPRINT 6 – BOOKING PAGE
 
 
 TOPICS COVERED:
 
 
-✓ Protected Routes
-✓ Conditional Rendering
-✓ Rendering Lists
+✓ useLocation
+✓ useNavigate
+✓ Seat Selection
+✓ API Integration
+✓ Async/Await
+✓ Loading State
+✓ Error Handling
 
 
 WHY THIS COMPONENT?
 
 
-Bookings represent one of the
-most important user journeys.
+This page completes the core
+BookMyShow booking journey.
 
 
-Sprint 1:
-
-
-Protected UI Shell
-
-
-Sprint 5:
-
-
-Booking APIs
+Movie Details
 ↓
-Ticket Cancellation
+Book Tickets
 ↓
-Booking History
+Seat Selection
 ↓
-Booking Details
+Create Booking
+↓
+Booking Success
 
 
 =========================================================
 */
 
 
-const sampleBookings = [
-  {
-    id: 1,
+import { useState } from "react";
 
 
-    movie: "Interstellar",
+import { useLocation, useNavigate } from "react-router-dom";
 
 
-    seats: "A1, A2",
+import SeatGrid from "../components/SeatGrid";
 
 
-    date: "20 July 2026",
-  },
-
-
-  {
-    id: 2,
-
-
-    movie: "Dune",
-
-
-    seats: "B4",
-
-
-    date: "22 July 2026",
-  },
-];
+import { createBooking } from "../api/booking.api";
 
 
 export default function Bookings() {
+  const location = useLocation();
+
+
+  const navigate = useNavigate();
+
+
+  /*
+  =====================================================
+  NAVIGATION STATE
+
+
+  MovieDetails
+  ↓
+  navigate("/bookings", {
+    state: {
+      movie,
+      show,
+    }
+  })
+
+
+  =====================================================
+  */
+
+
+  const bookingData = location.state;
+
+
+  /*
+  =====================================================
+  DIRECT ACCESS
+
+
+  User typed /bookings directly.
+
+
+  Booking history integration
+  comes in the next step.
+
+
+  =====================================================
+  */
+
+
+  if (!bookingData) {
+    return (
+      <section>
+        <h1>My Bookings</h1>
+
+
+        <p>Booking history integration will be added in the next step.</p>
+      </section>
+    );
+  }
+
+
+  const { movie, show } = bookingData;
+
+
+  /*
+  =====================================================
+  LOCAL STATE
+
+
+  =====================================================
+  */
+
+
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
+
+  const [loading, setLoading] = useState(false);
+
+
+  const [error, setError] = useState("");
+
+
+  /*
+  =====================================================
+  CREATE BOOKING
+
+
+  =====================================================
+  */
+
+
+  async function handleBooking() {
+    try {
+      setLoading(true);
+
+
+      setError("");
+
+
+      await createBooking({
+        showId: show._id,
+
+
+        selectedSeats,
+      });
+
+
+      alert("Booking created successfully!");
+
+
+      navigate("/my-bookings");
+    } catch (error) {
+      setError(error.response?.data?.message || "Booking failed");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
   return (
     <section>
-      <h1>My Bookings</h1>
+      <h1>Book Tickets</h1>
 
 
-      <p>View your recent bookings.</p>
+      <div style={styles.summary}>
+        <h2>{movie.title}</h2>
 
 
-      <div style={styles.grid}>
-        {sampleBookings.map((booking) => (
-          <div key={booking.id} style={styles.card}>
-            <h3>{booking.movie}</h3>
+        <p>Genre: {movie.genre}</p>
 
 
-            <p>Seats: {booking.seats}</p>
+        <p>Rating: {movie.rating}</p>
 
 
-            <p>Date: {booking.date}</p>
-          </div>
-        ))}
+        <p>Date: {new Date(show.date).toLocaleDateString()}</p>
+
+
+        <p>Time: {show.time}</p>
+
+
+        <p>Available Seats: {show.availableSeats}</p>
       </div>
+
+
+      {error && <p style={styles.error}>{error}</p>}
+
+
+      <h2>Select Seats</h2>
+
+
+      <SeatGrid
+        seats={show.seats}
+        selectedSeats={selectedSeats}
+        setSelectedSeats={setSelectedSeats}
+      />
+
+
+      <div style={styles.selection}>
+        <h3>Selected Seats</h3>
+
+
+        {selectedSeats.length === 0 ? (
+          <p>No seats selected.</p>
+        ) : (
+          <p>{selectedSeats.join(", ")}</p>
+        )}
+      </div>
+
+
+      <button
+        onClick={handleBooking}
+        disabled={selectedSeats.length === 0 || loading}
+        style={{
+          ...styles.button,
+
+
+          ...(selectedSeats.length === 0 || loading ? styles.disabled : {}),
+        }}
+      >
+        {loading ? "Booking..." : "Confirm Booking"}
+      </button>
     </section>
   );
 }
 
 
 const styles = {
-  grid: {
-    marginTop: "30px",
-
-
-    display: "grid",
-
-
-    gap: "20px",
-  },
-
-
-  card: {
-    background: "#fff",
-
-
+  summary: {
     border: "1px solid #ddd",
 
 
     padding: "20px",
 
 
-    borderRadius: "6px",
+    borderRadius: "8px",
+
+
+    marginBottom: "30px",
+  },
+
+
+  selection: {
+    marginTop: "30px",
+  },
+
+
+  button: {
+    marginTop: "30px",
+
+
+    padding: "12px 20px",
+
+
+    cursor: "pointer",
+  },
+
+
+  disabled: {
+    cursor: "not-allowed",
+
+
+    opacity: 0.5,
+  },
+
+
+  error: {
+    color: "red",
+
+
+    marginBottom: "20px",
   },
 };
 
 
 /*
 =========================================================
-KEY TAKEAWAYS
+VERIFICATION
 
 
-1. Protected pages evolve
-   progressively.
+✓ Book Tickets opens this page
 
 
-2. Lists are frequently used
-   in dashboards.
+✓ Seat layout renders
 
 
-3. Sprint 5 transforms this into
-   a complete booking experience.
+✓ Available seats selectable
+
+
+✓ Booked seats disabled
+
+
+✓ Selected seats displayed
+
+
+✓ Confirm Booking calls API
+
+
+✓ Success alert shown
+
+
+✓ Redirects to /bookings
+
+
+✓ Errors displayed properly
 
 
 =========================================================
