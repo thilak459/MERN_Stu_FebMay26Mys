@@ -51,33 +51,81 @@ Charts & Insights
 */
 
 
-const dashboardStats = [
-  {
-    id: 1,
-    title: "Movies",
-    value: 12,
-    description: "Movies currently available",
-  },
+import { useEffect, useState } from "react";
 
 
-  {
-    id: 2,
-    title: "Shows",
-    value: 48,
-    description: "Active show schedules",
-  },
-
-
-  {
-    id: 3,
-    title: "Bookings",
-    value: 356,
-    description: "Total bookings made",
-  },
-];
+import { getDashboardStats } from "../../api/admin.api";
 
 
 export default function Dashboard() {
+  const [stats, setStats] = useState(null);
+
+
+  const [loading, setLoading] = useState(true);
+
+
+  const [error, setError] = useState("");
+
+
+  useEffect(() => {
+    async function loadDashboard() {
+      try {
+        const response = await getDashboardStats();
+
+
+        setStats(response.data);
+      } catch (error) {
+        setError(error.response?.data?.message || "Failed to load dashboard");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+
+    loadDashboard();
+  }, []);
+
+
+  if (loading) {
+    return <p>Loading dashboard...</p>;
+  }
+
+
+  if (error) {
+    return <p style={styles.error}>{error}</p>;
+  }
+
+
+  const dashboardStats = [
+    {
+      title: "Movies",
+      value: stats.totalMovies,
+      description: "Movies currently available",
+    },
+
+
+    {
+      title: "Shows",
+      value: stats.totalShows,
+      description: "Active show schedules",
+    },
+
+
+    {
+      title: "Bookings",
+      value: stats.totalBookings,
+      description: "Total bookings made",
+    },
+
+
+    {
+      title: "Users",
+      value: stats.totalUsers,
+      description: "Registered users",
+    },
+  ];
+
+
   return (
     <section>
       <header>
@@ -88,55 +136,20 @@ export default function Dashboard() {
       </header>
 
 
-      {/* Dashboard Statistics */}
-
-
       <section style={styles.grid}>
         {dashboardStats.map((stat) => (
-          <StatCard key={stat.id} stat={stat} />
+          <article key={stat.title} style={styles.card}>
+            <h3>{stat.title}</h3>
+
+
+            <h2>{stat.value}</h2>
+
+
+            <p>{stat.description}</p>
+          </article>
         ))}
       </section>
-
-
-      {/* Future Analytics Area */}
-
-
-      <section style={styles.analytics}>
-        <h2>Upcoming Analytics</h2>
-
-
-        <p>Sprint 7 will introduce:</p>
-
-
-        <ul>
-          <li>Most booked movies</li>
-
-
-          <li>Booking trends</li>
-
-
-          <li>Occupancy insights</li>
-
-
-          <li>Revenue reports</li>
-        </ul>
-      </section>
     </section>
-  );
-}
-
-
-function StatCard({ stat }) {
-  return (
-    <article style={styles.card}>
-      <h3>{stat.title}</h3>
-
-
-      <h2>{stat.value}</h2>
-
-
-      <p>{stat.description}</p>
-    </article>
   );
 }
 
@@ -170,78 +183,7 @@ const styles = {
   },
 
 
-  analytics: {
-    marginTop: "40px",
-
-
-    background: "#fff",
-
-
-    border: "1px solid #ddd",
-
-
-    borderRadius: "8px",
-
-
-    padding: "25px",
+  error: {
+    color: "red",
   },
 };
-
-
-/*
-=========================================================
-FLOW
-
-
-Admin Login
-↓
-Dashboard
-↓
-Overview Statistics
-↓
-Future Analytics
-
-
-=========================================================
-
-
-KEY TAKEAWAYS
-
-
-1. Dashboards summarize important data.
-
-
-2. map() is useful beyond lists.
-
-
-3. Static dashboards evolve naturally
-   into analytics-driven dashboards.
-
-
-4. Sprint 7 enhances this page
-   rather than replacing it.
-
-
-=========================================================
-
-
-VERIFICATION
-
-
-✓ Dashboard loads successfully
-
-
-✓ Statistics render correctly
-
-
-✓ Responsive layout works
-
-
-✓ No console errors
-
-
-✓ Sprint 7 ready
-
-
-=========================================================
-*/
