@@ -40,7 +40,7 @@ Booking Success
 */
 
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 import { useLocation, useNavigate } from "react-router-dom";
@@ -50,6 +50,12 @@ import SeatGrid from "../components/SeatGrid";
 
 
 import { createBooking } from "../api/booking.api";
+
+
+import { getShowById } from "../api/show.api";
+
+
+import LoadingSpinner from "../components/LoadingSpinner";
 
 
 export default function Bookings() {
@@ -79,6 +85,24 @@ export default function Bookings() {
 
 
   const bookingData = location.state;
+
+
+    /*
+  =====================================================
+  LOCAL STATE
+
+
+  =====================================================
+  */
+
+
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
+
+  const [loading, setLoading] = useState(false);
+
+
+  const [error, setError] = useState("");
 
 
   /*
@@ -112,22 +136,28 @@ export default function Bookings() {
   const { movie, show } = bookingData;
 
 
-  /*
-  =====================================================
-  LOCAL STATE
+  const [showDetails, setShowDetails] =
+  useState(null);
 
 
-  =====================================================
-  */
+  useEffect(() => {
+    async function fetchShow() {
+      try {
+        const response =
+          await getShowById(show._id);
 
 
-  const [selectedSeats, setSelectedSeats] = useState([]);
+        setShowDetails(
+          response.data,
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
 
-  const [loading, setLoading] = useState(false);
-
-
-  const [error, setError] = useState("");
+    fetchShow();
+  }, [show._id]);
 
 
   /*
@@ -167,6 +197,11 @@ export default function Bookings() {
   }
 
 
+  if (!showDetails) {
+    return <LoadingSpinner />;
+  }
+
+
   return (
     <section>
       <h1>Book Tickets</h1>
@@ -188,7 +223,7 @@ export default function Bookings() {
         <p>Time: {show.time}</p>
 
 
-        <p>Available Seats: {show.availableSeats}</p>
+        <p>Available Seats: {showDetails.availableSeats}</p>
       </div>
 
 
@@ -199,7 +234,7 @@ export default function Bookings() {
 
 
       <SeatGrid
-        seats={show.seats}
+        seats={showDetails.seats}
         selectedSeats={selectedSeats}
         setSelectedSeats={setSelectedSeats}
       />
