@@ -28,8 +28,14 @@ CREATE MOVIE
 */
 exports.movieSchema = Joi.object({
   title: Joi.string().required(),
+
   genre: Joi.string().required(),
+
   rating: Joi.number().min(1).max(5).required(),
+
   duration: Joi.number().required(),
+
   releaseDate: Joi.date().required(),
+
+  poster: Joi.string().allow("").optional(),
 });
