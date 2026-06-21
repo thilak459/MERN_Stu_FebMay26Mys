@@ -60,3 +60,77 @@ export async function getShowById(showId) {
 
   return response.data;
 }
+
+/*
+=========================================================
+CREATE SHOW
+
+
+POST /api/shows
+=========================================================
+*/
+
+
+export async function createShow(showData) {
+  const token = localStorage.getItem("token");
+
+
+  const response = await api.post("/shows", showData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+
+  return response.data;
+}
+
+
+/*
+=========================================================
+UPDATE SHOW
+
+
+PUT /api/shows/:id
+=========================================================
+*/
+
+
+export async function updateShow(showId, showData) {
+  const token = localStorage.getItem("token");
+
+
+  const response = await api.put(`/shows/${showId}`, showData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+
+  return response.data;
+}
+
+
+/*
+=========================================================
+DELETE SHOW
+
+
+DELETE /api/shows/:id
+=========================================================
+*/
+
+
+export async function deleteShow(showId) {
+  const token = localStorage.getItem("token");
+
+
+  const response = await api.delete(`/shows/${showId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+
+  return response.data;
+}
