@@ -82,10 +82,13 @@ exports.loginUser = async ({ email, password }) => {
   );
 
   return {
-    token,
-    user: {
-      id: user._id,
-      role: user.role,
-    },
-  };
+  token,
+  user: {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  },
+};
+
 };
