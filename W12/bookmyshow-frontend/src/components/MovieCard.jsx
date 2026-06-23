@@ -11,6 +11,7 @@ export default function MovieCard({ movie }) {
         navigate(`/movies/${movie._id}`)
       }
 >
+      <img src={movie.poster} alt={movie.title} style={styles.poster} />
       <h3>{movie.title}</h3>
 
 
@@ -20,7 +21,7 @@ export default function MovieCard({ movie }) {
 
 
       <p>
-        <strong>Rating:</strong> {movie.rating}
+        <strong>Rating:</strong> {movie.rating}⭐
       </p>
 
 
@@ -43,7 +44,17 @@ const styles = {
     cursor: "pointer",
     background: "#fff",
     border: "1px solid #ddd",
-    borderRadius: "8px",
-    padding: "20px",
+    borderRadius: "12px",
+    padding: "12px",
+    width: "280px",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+  },
+
+  poster: {
+    width: "100%",
+    height: "300px", // changed from 400px
+    objectFit: "cover",
+    borderRadius: "10px",
+    marginBottom: "10px",
   },
 };
