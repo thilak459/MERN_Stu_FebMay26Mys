@@ -286,18 +286,23 @@ const styles = {
 
   selection: {
     marginTop: "30px",
+    marginLeft: "450px"
   },
 
 
   button: {
-    marginTop: "30px",
-
-
-    padding: "12px 20px",
-
-
-    cursor: "pointer",
-  },
+  backgroundColor: "#f84464",
+  color: "#fff",
+  border: "none",
+  borderRadius: "10px",
+  padding: "14px 30px",
+  fontSize: "16px",
+  fontWeight: "600",
+  cursor: "pointer",
+  boxShadow: "0 4px 12px rgba(248,68,100,0.3)",
+  transition: "all 0.3s ease",
+  marginLeft: "420px",
+},
 
 
   disabled: {

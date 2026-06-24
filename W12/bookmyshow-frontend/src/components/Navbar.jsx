@@ -74,7 +74,12 @@ export default function Navbar() {
 
   return (
     <nav style={styles.nav}>
-      <h2 style={styles.logo}>BookMyShow</h2>
+      <h2
+        style={styles.logo}
+        onClick={() => navigate("/")}
+      >
+        🎬 BookMyShow
+      </h2>
 
 
       <div style={styles.links}>
@@ -89,23 +94,16 @@ export default function Navbar() {
 
 
         {isAuthenticated && (
-            <>
-              <NavLink
-                to="/bookings"
-                style={getNavStyle}
-              >
-                Book Tickets
-              </NavLink>
-
-
-              <NavLink
-                to="/my-bookings"
-                style={getNavStyle}
-              >
-                My Bookings
-              </NavLink>
-            </>
-          )}
+          <>
+      
+            <NavLink
+              to="/my-bookings"
+              style={getNavStyle}
+            >
+              My Bookings
+            </NavLink>
+          </>
+        )}
 
 
 
@@ -157,7 +155,9 @@ function getNavStyle({ isActive }) {
     borderBottom: isActive ? "2px solid #d32f2f" : "none",
 
 
-    paddingBottom: "4px",
+    padding: "8px 0",
+    fontSize: "17px",
+    transition: "0.3s",
   };
 }
 
@@ -165,53 +165,48 @@ function getNavStyle({ isActive }) {
 const styles = {
   nav: {
     display: "flex",
-
-
     justifyContent: "space-between",
-
-
     alignItems: "center",
-
-
-    padding: "15px 25px",
-
-
-    borderBottom: "1px solid #ddd",
-
-
-    marginBottom: "20px",
+    padding: "18px 40px",
+    backgroundColor: "#ffffff",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
+    position: "sticky",
+    top: "0",
+    zIndex: "1000",
   },
 
 
   logo: {
     margin: 0,
-
-
-    color: "#d32f2f",
+    color: "#f84464",
+    fontSize: "35px",
+    fontWeight: "700",
+    cursor: "pointer",
   },
 
 
   links: {
     display: "flex",
-
-
-    gap: "20px",
-
-
+    gap: "30px",
     alignItems: "center",
   },
 
 
   userName: {
-    fontWeight: "bold",
+    fontWeight: "600",
+    fontSize: "18px",
   },
 
 
   logoutButton: {
+    backgroundColor: "#f84464",
+    color: "#fff",
+    border: "none",
+    padding: "10px 18px",
+    borderRadius: "8px",
     cursor: "pointer",
-
-
-    padding: "6px 12px",
+    fontSize: "15px",
+    fontWeight: "600",
   },
 };
 

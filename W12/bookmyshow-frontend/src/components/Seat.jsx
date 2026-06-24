@@ -35,38 +35,30 @@ export default function Seat({ seat, isSelected, onSelect }) {
 
 const styles = {
   seat: {
-    width: "50px",
-    height: "50px",
-
-
-    border: "1px solid #ccc",
-
-
-    borderRadius: "6px",
-
-
+    width: "55px",
+    height: "55px",
+    border: "none",
+    borderRadius: "12px",
     cursor: "pointer",
-
-
-    backgroundColor: "#ffffff",
+    backgroundColor: "#f5f5f5",
+    color: "#333",
+    fontWeight: "bold",
+    fontSize: "15px",
+    boxShadow: "0 3px 8px rgba(0,0,0,0.15)",
+    transition: "all 0.3s ease",
   },
-
 
   booked: {
-    backgroundColor: "#d32f2f",
-
-
-    color: "#ffffff",
-
-
+    backgroundColor: "#e53935",
+    color: "#fff",
     cursor: "not-allowed",
+    boxShadow: "0 3px 8px rgba(229,57,53,0.4)",
   },
-
 
   selected: {
-    backgroundColor: "#2e7d32",
-
-
-    color: "#ffffff",
+    backgroundColor: "#43a047",
+    color: "#fff",
+    boxShadow: "0 3px 8px rgba(67,160,71,0.4)",
   },
+  
 };

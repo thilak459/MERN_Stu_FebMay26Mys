@@ -43,16 +43,25 @@ export default function ShowCard({ show, onBook }) {
 
 const styles = {
   card: {
-    background: "#fff",
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    padding: "20px",
-  },
-
+  background: "#fff",
+  borderRadius: "16px",
+  padding: "20px",
+  marginBottom: "20px",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+},
 
   button: {
-    marginTop: "15px",
-    padding: "10px 15px",
+    marginTop: "20px",
+    padding: "12px 20px",
+    background: "#f84464",
+    color: "#fff",
+    border: "none",
+    borderRadius: "8px",
     cursor: "pointer",
+    fontSize: "16px",
+    fontWeight: "bold",
   },
 };

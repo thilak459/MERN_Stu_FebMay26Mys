@@ -63,30 +63,66 @@ export default function MyBookings() {
 
 
   return (
-    <section>
-      <h1>My Bookings</h1>
+    <section style={styles.container}>
+      <h1 style={styles.title}>🎟️ My Bookings</h1>
 
 
       {error && <p style={styles.error}>{error}</p>}
 
 
-      {bookings.length === 0 && <p>No bookings found.</p>}
+      {bookings.length === 0 && (
+  <p style={styles.empty}>
+    No bookings found. Book your first movie! 🎬
+  </p>
+)}
 
 
-      {bookings.map((booking) => (
-        <BookingCard
-          key={booking._id}
-          booking={booking}
-          onCancel={handleCancel}
-        />
-      ))}
+      <div style={styles.bookingList}>
+  {bookings.map((booking) => (
+    <BookingCard
+      key={booking._id}
+      booking={booking}
+      onCancel={handleCancel}
+    />
+  ))}
+</div>
     </section>
   );
 }
 
 
 const styles = {
-  error: {
-    color: "red",
+  container: {
+    padding: "40px",
+    minHeight: "100vh",
+    backgroundColor: "#f5f5f5",
   },
+
+  title: {
+    textAlign: "center",
+    fontSize: "42px",
+    marginBottom: "40px",
+    color: "#222",
+  },
+
+  error: {
+    color: "#d32f2f",
+    textAlign: "center",
+    fontSize: "18px",
+    marginBottom: "20px",
+  },
+
+  empty: {
+    textAlign: "center",
+    fontSize: "20px",
+    color: "#666",
+    marginTop: "80px",
+  },
+  bookingList: {
+  display: "flex",
+  flexDirection: "column",
+  gap: "25px",
+  maxWidth: "900px",
+  margin: "0 auto",
+},
 };

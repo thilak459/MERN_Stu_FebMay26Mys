@@ -60,7 +60,9 @@ export default function Home() {
 
 
       <section style={styles.hero}>
-        <h1>Welcome to BookMyShow</h1>
+        <h1 style={{ fontSize: "40px", marginBottom: "20px" }}>
+           Welcome to BookMyShow
+        </h1>
 
 
         <p>Discover movies, explore shows, and book tickets effortlessly.</p>
@@ -89,7 +91,15 @@ export default function Home() {
 
 
       <section>
-        <h2>What You Can Do</h2>
+        <h2
+          style={{
+            textAlign: "center",
+            marginTop: "60px",
+            fontSize: "40px",
+          }}
+        >
+          What You Can Do
+        </h2>
 
 
         <div style={styles.featureGrid}>
@@ -135,68 +145,64 @@ function FeatureCard({
 
 const styles = {
   hero: {
+    background: "linear-gradient(135deg, #1e3c72, #2a5298)",
+    color: "#fff",
     textAlign: "center",
-
-
-    padding: "60px 20px",
+    padding: "100px 20px",
+    borderRadius: "20px",
+    margin: "30px",
   },
 
 
   actions: {
-    marginTop: "25px",
-
-
-    display: "flex",
-
-
-    justifyContent: "center",
-
-
-    gap: "15px",
-  },
+  marginTop: "40px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "20px",
+  flexWrap: "wrap",
+},
 
 
   primaryButton: {
-    padding: "12px 20px",
-
-
+    backgroundColor: "#f84464",
+    color: "#fff",
+    border: "none",
+    borderRadius: "10px",
+    padding: "14px 28px",
+    fontSize: "16px",
+    fontWeight: "600",
     cursor: "pointer",
   },
 
 
   secondaryButton: {
-    padding: "12px 20px",
-
-
+    backgroundColor: "#fff",
+    color: "#f84464",
+    border: "none",
+    borderRadius: "10px",
+    padding: "14px 28px",
+    fontSize: "16px",
+    fontWeight: "600",
     cursor: "pointer",
   },
 
 
   featureGrid: {
-    marginTop: "30px",
-
-
+    marginTop: "40px",
     display: "grid",
-
-
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-
-
-    gap: "20px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+    gap: "30px",
+    padding: "0 40px",
   },
 
 
   card: {
     background: "#fff",
-
-
-    border: "1px solid #ddd",
-
-
-    padding: "20px",
-
-
-    borderRadius: "6px",
+    padding: "30px",
+    borderRadius: "20px",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
+    textAlign: "center",
   },
 };
 

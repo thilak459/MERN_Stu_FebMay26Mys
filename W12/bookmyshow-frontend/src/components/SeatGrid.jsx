@@ -45,22 +45,37 @@ export default function SeatGrid({ seats, selectedSeats, setSelectedSeats }) {
 const styles = {
   legend: {
     display: "flex",
-
-
-    gap: "20px",
-
-
-    marginBottom: "20px",
+    justifyContent: "center",
+    gap: "30px",
+    marginBottom: "30px",
+    fontSize: "18px",
+    fontWeight: "600",
+    flexWrap: "wrap",
   },
 
+  screen: {
+    width: "500px",
+    maxWidth: "90%",
+    margin: "0 auto 40px",
+    padding: "12px",
+    textAlign: "center",
+    background: "#e0e0e0",
+    borderRadius: "50px",
+    fontWeight: "bold",
+    color: "#555",
+    boxShadow: "0 3px 10px rgba(0,0,0,0.1)",
+  },
 
   grid: {
     display: "grid",
-
-
-    gridTemplateColumns: "repeat(10, 50px)",
-
-
-    gap: "10px",
+    gridTemplateColumns: "repeat(10, 55px)",
+    gap: "12px",
+    justifyContent: "center",
+    padding: "20px",
+    background: "#fafafa",
+    borderRadius: "20px",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+    width: "fit-content",
+    margin: "0 auto",
   },
 };
