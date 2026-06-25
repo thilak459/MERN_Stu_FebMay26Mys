@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const AppError = require('../utils/customError');
-const users = require('../data/users');
+const User = require('../models/User');
 
-const JWT_SECRET = 'your_jwt_secret_key_here'; // Hardcoded for this mockup
+const JWT_SECRET = process.env.JWT_SECRET || 'lms_super_secret_jwt_key_2024';
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   let token;
   
   if (req.cookies && req.cookies.token) {
@@ -19,7 +19,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    const user = users.find(u => u.id === decoded.userId);
+    const user = await User.findById(decoded.userId);
     
     if (!user) {
       return next(new AppError('Invalid token: User not found', 401));

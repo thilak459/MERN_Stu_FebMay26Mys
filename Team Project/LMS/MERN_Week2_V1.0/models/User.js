@@ -1,0 +1,48 @@
+// models/User.js
+const mongoose = require('mongoose');
+const bcrypt   = require('bcryptjs');
+
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type:     String,
+      required: [true, 'Username is required'],
+      unique:   true,
+      trim:     true,
+      lowercase: true,
+    },
+    password: {
+      type:     String,
+      required: [true, 'Password is required'],
+      minlength: 6,
+    },
+    role: {
+      type:    String,
+      enum:    ['student', 'admin'],
+      default: 'student',
+    },
+  },
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (doc, ret) => {
+        ret.id = ret._id.toString();
+        return ret;
+      }
+    }
+  }
+);
+
+/* Hash password before saving */
+userSchema.pre('save', async function () {
+  if (!this.isModified('password')) return;
+  this.password = await bcrypt.hash(this.password, 10);
+});
+
+/* Compare plain password with hashed */
+userSchema.methods.comparePassword = function (plain) {
+  return bcrypt.compare(plain, this.password);
+};
+
+module.exports = mongoose.model('User', userSchema);
