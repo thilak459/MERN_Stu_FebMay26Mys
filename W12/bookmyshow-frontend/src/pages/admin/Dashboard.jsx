@@ -97,56 +97,57 @@ export default function Dashboard() {
 
 
   const dashboardStats = [
-    {
-      title: "Movies",
-      value: stats.totalMovies,
-      description: "Movies currently available",
-    },
-
-
-    {
-      title: "Shows",
-      value: stats.totalShows,
-      description: "Active show schedules",
-    },
-
-
-    {
-      title: "Bookings",
-      value: stats.totalBookings,
-      description: "Total bookings made",
-    },
-
-
-    {
-      title: "Users",
-      value: stats.totalUsers,
-      description: "Registered users",
-    },
-  ];
+  {
+    title: "Movies",
+    value: stats.totalMovies,
+    description: "Movies currently available",
+    icon: "🎬",
+  },
+  {
+    title: "Shows",
+    value: stats.totalShows,
+    description: "Active show schedules",
+    icon: "🎭",
+  },
+  {
+    title: "Bookings",
+    value: stats.totalBookings,
+    description: "Total bookings made",
+    icon: "🎟️",
+  },
+  {
+    title: "Users",
+    value: stats.totalUsers,
+    description: "Registered users",
+    icon: "👤",
+  },
+];
 
 
   return (
-    <section>
-      <header>
-        <h1>Admin Dashboard</h1>
+    <section style={styles.container}>
+      <header style={styles.header}>
+        <h1 style={styles.title}>📊 Admin Dashboard</h1>
 
-
-        <p>Welcome back. Here's a quick overview of the platform.</p>
+        <p style={styles.subtitle}>
+          Welcome back. Here's a quick overview of the platform.
+        </p>
       </header>
 
 
       <section style={styles.grid}>
         {dashboardStats.map((stat) => (
           <article key={stat.title} style={styles.card}>
-            <h3>{stat.title}</h3>
+  <div style={styles.icon}>{stat.icon}</div>
 
+  <h3 style={styles.cardTitle}>{stat.title}</h3>
 
-            <h2>{stat.value}</h2>
+  <h2 style={styles.cardValue}>{stat.value}</h2>
 
-
-            <p>{stat.description}</p>
-          </article>
+  <p style={styles.cardDescription}>
+    {stat.description}
+  </p>
+</article>
         ))}
       </section>
     </section>
@@ -155,35 +156,73 @@ export default function Dashboard() {
 
 
 const styles = {
+  container: {
+    padding: "25px",
+    backgroundColor: "#f8fafc",
+    minHeight: "100vh",
+  },
+
+  header: {
+    marginBottom: "30px",
+  },
+
+  title: {
+    fontSize: "32px",
+    color: "#111827",
+    marginBottom: "8px",
+    fontWeight: "700",
+  },
+
+  subtitle: {
+    color: "#6b7280",
+    fontSize: "15px",
+  },
+
   grid: {
-    marginTop: "30px",
-
-
     display: "grid",
-
-
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-
-
+    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
     gap: "20px",
   },
 
-
   card: {
-    background: "#fff",
-
-
-    border: "1px solid #ddd",
-
-
-    borderRadius: "8px",
-
-
-    padding: "25px",
+    background: "#ffffff",
+    borderRadius: "15px",
+    padding: "20px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+    textAlign: "center",
+    border: "1px solid #e5e7eb",
+    transition: "all 0.3s ease",
   },
 
+  icon: {
+    fontSize: "32px",
+    marginBottom: "10px",
+  },
+
+  cardTitle: {
+    color: "#6b7280",
+    fontSize: "16px",
+    fontWeight: "600",
+    marginBottom: "5px",
+  },
+
+  cardValue: {
+    fontSize: "30px",
+    color: "#1e40af",
+    fontWeight: "700",
+    marginBottom: "5px",
+  },
+
+  cardDescription: {
+    color: "#6b7280",
+    fontSize: "13px",
+    lineHeight: "1.5",
+  },
 
   error: {
-    color: "red",
+    color: "#dc2626",
+    textAlign: "center",
+    fontSize: "16px",
+    marginTop: "20px",
   },
 };

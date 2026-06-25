@@ -178,19 +178,19 @@ export default function Login() {
       */
 
       const from =
-  location.state?.from?.pathname;
+        location.state?.from?.pathname;
 
-    if (user.role === "admin") {
-      navigate(
-        from || "/admin/dashboard",
-        { replace: true }
-      );
-    } else {
-      navigate(
-        from || "/",
-        { replace: true }
-      );
-    }
+      if (user.role === "admin") {
+        navigate(
+          from || "/admin/dashboard",
+          { replace: true }
+        );
+      } else {
+        navigate(
+          from || "/",
+          { replace: true }
+        );
+      }
 
     } catch (error) {
       setError(
@@ -203,7 +203,7 @@ export default function Login() {
 
   return (
     <section style={styles.container}>
-      <h1>Login</h1>
+      <h1 style={styles.title}>Login</h1>
 
       <p style={styles.subtitle}>Welcome back to BookMyShow.</p>
 
@@ -211,6 +211,7 @@ export default function Login() {
 
       <form onSubmit={handleSubmit} style={styles.form}>
         <input
+          style={styles.input}
           type="email"
           name="email"
           placeholder="Email Address"
@@ -221,6 +222,7 @@ export default function Login() {
         />
 
         <input
+          style={styles.input}
           type="password"
           name="password"
           placeholder="Password"
@@ -230,7 +232,7 @@ export default function Login() {
           required
         />
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} style={styles.button}>
           {loading ? "Logging in..." : "Login"}
         </button>
       </form>
@@ -245,48 +247,67 @@ export default function Login() {
 const styles = {
   container: {
     maxWidth: "450px",
+    margin: "70px auto",
+    background: "#ffffff",
+    padding: "40px",
+    borderRadius: "20px",
+    boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
+    border: "1px solid #e5e7eb",
+  },
 
-    margin: "40px auto",
-
-    background: "#fff",
-
-    padding: "30px",
-
-    borderRadius: "8px",
-
-    border: "1px solid #ddd",
+  title: {
+    textAlign: "center",
+    color: "#111827",
+    fontSize: "36px",
+    marginBottom: "10px",
   },
 
   subtitle: {
-    marginTop: "10px",
-
-    color: "#666",
+    textAlign: "center",
+    color: "#6b7280",
+    marginBottom: "30px",
+    fontSize: "16px",
   },
 
   form: {
     display: "flex",
-
     flexDirection: "column",
+    gap: "18px",
+  },
 
-    gap: "15px",
+  input: {
+    padding: "14px",
+    border: "1px solid #d1d5db",
+    borderRadius: "10px",
+    fontSize: "16px",
+    outline: "none",
+  },
 
-    marginTop: "25px",
+  button: {
+    backgroundColor: "#1e40af",
+    color: "#ffffff",
+    border: "none",
+    padding: "14px",
+    borderRadius: "10px",
+    cursor: "pointer",
+    fontSize: "16px",
+    fontWeight: "600",
+    marginTop: "10px",
   },
 
   error: {
-    marginTop: "20px",
-
+    marginBottom: "20px",
     padding: "12px",
-
-    background: "#ffebee",
-
-    color: "#c62828",
-
-    borderRadius: "4px",
+    background: "#fef2f2",
+    color: "#dc2626",
+    borderRadius: "10px",
+    border: "1px solid #fecaca",
   },
 
   footer: {
-    marginTop: "20px",
+    textAlign: "center",
+    marginTop: "25px",
+    color: "#6b7280",
   },
 };
 

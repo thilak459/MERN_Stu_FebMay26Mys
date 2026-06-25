@@ -178,8 +178,9 @@ export default function Signup() {
 
 
   return (
+    <div style={styles.page}>
     <section style={styles.container}>
-      <h1>Create Account</h1>
+      <h1 style={styles.title}>Create Account</h1>
 
 
       <p style={styles.subtitle}>Join BookMyShow and start booking tickets.</p>
@@ -200,6 +201,7 @@ export default function Signup() {
           onChange={handleChange}
           disabled={loading}
           required
+          style={styles.input}
         />
 
 
@@ -211,6 +213,7 @@ export default function Signup() {
           onChange={handleChange}
           disabled={loading}
           required
+          style={styles.input}
         />
 
 
@@ -222,10 +225,11 @@ export default function Signup() {
           onChange={handleChange}
           disabled={loading}
           required
+          style={styles.input}
         />
 
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} style={styles.button}>
           {loading ? "Creating Account..." : "Signup"}
         </button>
       </form>
@@ -234,90 +238,93 @@ export default function Signup() {
       <p style={styles.footer}>
         Already have an account? <Link to="/login">Login</Link>
       </p>
-    </section>
+    </section></div>
   );
 }
 
 
 const styles = {
-  container: {
-    maxWidth: "450px",
-
-
-    margin: "40px auto",
-
-
-    background: "#fff",
-
-
-    padding: "30px",
-
-
-    borderRadius: "8px",
-
-
-    border: "1px solid #ddd",
+  page: {
+    minHeight: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background:
+      "linear-gradient(135deg, #eff6ff, #ffffff)",
   },
 
+  container: {
+    width: "100%",
+    maxWidth: "460px",
+    background: "#ffffff",
+    padding: "40px",
+    borderRadius: "20px",
+    boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
+    border: "1px solid #e5e7eb",
+  },
+
+  title: {
+    textAlign: "center",
+    color: "#111827",
+    fontSize: "36px",
+    marginBottom: "10px",
+  },
 
   subtitle: {
-    marginTop: "10px",
-
-
-    color: "#666",
+    textAlign: "center",
+    color: "#6b7280",
+    marginBottom: "30px",
+    fontSize: "16px",
   },
-
 
   form: {
     display: "flex",
-
-
     flexDirection: "column",
-
-
-    gap: "15px",
-
-
-    marginTop: "25px",
+    gap: "18px",
   },
 
+  input: {
+    padding: "14px",
+    border: "1px solid #d1d5db",
+    borderRadius: "10px",
+    fontSize: "16px",
+    outline: "none",
+  },
+
+  button: {
+    backgroundColor: "#1e40af",
+    color: "#ffffff",
+    border: "none",
+    padding: "14px",
+    borderRadius: "10px",
+    cursor: "pointer",
+    fontSize: "16px",
+    fontWeight: "600",
+    marginTop: "10px",
+  },
 
   error: {
-    marginTop: "20px",
-
-
+    marginBottom: "20px",
     padding: "12px",
-
-
-    background: "#ffebee",
-
-
-    color: "#c62828",
-
-
-    borderRadius: "4px",
+    background: "#fef2f2",
+    color: "#dc2626",
+    borderRadius: "10px",
+    border: "1px solid #fecaca",
   },
-
 
   success: {
-    marginTop: "20px",
-
-
+    marginBottom: "20px",
     padding: "12px",
-
-
-    background: "#e8f5e9",
-
-
-    color: "#2e7d32",
-
-
-    borderRadius: "4px",
+    background: "#ecfdf5",
+    color: "#059669",
+    borderRadius: "10px",
+    border: "1px solid #a7f3d0",
   },
 
-
   footer: {
-    marginTop: "20px",
+    textAlign: "center",
+    marginTop: "25px",
+    color: "#6b7280",
   },
 };
 

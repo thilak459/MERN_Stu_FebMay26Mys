@@ -179,7 +179,7 @@ const styles = {
   logo: {
     margin: 0,
     color: "#f84464",
-    fontSize: "35px",
+    fontSize: "30px",
     fontWeight: "700",
     cursor: "pointer",
   },

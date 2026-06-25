@@ -66,65 +66,49 @@ export default function AdminLayout() {
     navigate("/login");
   }
   return (
-    <section style={styles.container}>
-      {/*
-      ===================================================
-      ADMIN SIDEBAR
-      ===================================================
-      */}
+  <section style={styles.container}>
+    <aside style={styles.sidebar}>
+      <h2 style={styles.logo}>
+         Admin Panel
+      </h2>
 
+      <nav style={styles.nav}>
+        <NavLink
+          to="/admin"
+          end
+          style={getNavStyle}
+        >
+          📊 Dashboard
+        </NavLink>
 
-      <aside style={styles.sidebar}>
-        <h2>Admin Panel</h2>
+        <NavLink
+          to="/admin/movies"
+          style={getNavStyle}
+        >
+          🎬 Movies
+        </NavLink>
 
+        <NavLink
+          to="/admin/shows"
+          style={getNavStyle}
+        >
+          🎭 Shows
+        </NavLink>
 
-        <nav style={styles.nav}>
-          <NavLink to="/admin" end style={getNavStyle}>
-            Dashboard
-          </NavLink>
+        <button
+          style={styles.logoutButton}
+          onClick={handleLogout}
+        >
+          🚪 Logout
+        </button>
+      </nav>
+    </aside>
 
-
-          <NavLink to="/admin/movies" style={getNavStyle}>
-            Movies
-          </NavLink>
-
-
-          <NavLink to="/admin/shows" style={getNavStyle}>
-            Shows
-          </NavLink>
-
-
-          <button style={styles.logoutButton} onClick={handleLogout}>
-            Logout
-          </button>
-        </nav>
-      </aside>
-
-
-      {/*
-      ===================================================
-      ADMIN CONTENT
-
-
-      Outlet injects:
-
-
-      Dashboard
-      Movie Management
-
-
-      depending on the URL.
-
-
-      ===================================================
-      */}
-
-
-      <main style={styles.content}>
-        <Outlet />
-      </main>
-    </section>
-  );
+    <main style={styles.content}>
+      <Outlet />
+    </main>
+  </section>
+);
 }
 
 
@@ -144,12 +128,16 @@ their current location.
 function getNavStyle({ isActive }) {
   return {
     textDecoration: "none",
-
-
-    color: isActive ? "#d32f2f" : "#333",
-
-
-    fontWeight: isActive ? "bold" : "normal",
+    color: isActive ? "#ffffff" : "#e2e8f0",
+    backgroundColor: isActive
+      ? "#1e40af"
+      : "transparent",
+    padding: "12px 16px",
+    borderRadius: "10px",
+    fontWeight: "600",
+    fontSize: "17px",
+    display: "block",
+    transition: "all 0.3s ease",
   };
 }
 
@@ -157,59 +145,50 @@ function getNavStyle({ isActive }) {
 const styles = {
   container: {
     display: "flex",
-
-
     minHeight: "100vh",
+    backgroundColor: "#f8fafc",
   },
-
 
   sidebar: {
-    width: "250px",
-
-
-    background: "#fff",
-
-
-    borderRight: "1px solid #ddd",
-
-
-    padding: "25px",
+    width: "240px",
+    backgroundColor: "#0f172a",
+    padding: "30px 20px",
+    display: "flex",
+    flexDirection: "column",
   },
 
+  logo: {
+    color: "#ffffff",
+    margin: 0,
+    fontSize: "26px",
+    marginBottom: "35px",
+    textAlign: "center",
+  },
 
   nav: {
     display: "flex",
-
-
     flexDirection: "column",
-
-
-    gap: "15px",
-
-
-    marginTop: "25px",
+    gap: "12px",
   },
-
 
   content: {
     flex: 1,
-
-
     padding: "30px",
+    overflow: "auto",
   },
-
 
   logoutButton: {
-    marginTop: "20px",
-
-
-    padding: "10px",
-
-
+    marginTop: "30px",
+    backgroundColor: "#dc2626",
+    color: "#ffffff",
+    border: "none",
+    padding: "12px",
+    borderRadius: "10px",
     cursor: "pointer",
+    fontSize: "15px",
+    fontWeight: "600",
   },
 };
-
 
 /*
 =========================================================

@@ -75,9 +75,14 @@ export default function ShowManagement() {
 
 
   return (
-    <section>
-      <h1>Show Management</h1>
+    <section style={styles.container}>
+      <div style={styles.header}>
+        <h1 style={styles.title}>🎭 Show Management</h1>
 
+        <p style={styles.subtitle}>
+          Create, update and manage movie shows.
+        </p>
+      </div>
 
       <ShowForm
         movies={movies}
@@ -86,62 +91,139 @@ export default function ShowManagement() {
         buttonText={editingShow ? "Update Show" : "Create Show"}
       />
 
-
-      <table
-        style={{
-          width: "100%",
-        }}
-      >
-        <thead>
-        <tr>
-          <th>Movie</th>
-
-
-          <th>Date</th>
-
-
-          <th>Time</th>
-
-
-          <th>Total Seats</th>
-
-
-          <th>Available Seats</th>
-
-
-          <th>Actions</th>
-        </tr>
-      </thead>
-
-        <tbody>
-          {shows.map((show) => (
-            <tr key={show._id}>
-              <td>{show.movieId?.title}</td>
-
-
-              <td>{new Date(show.date).toLocaleDateString()}</td>
-
-
-              <td>{show.time}</td>
-
-
-              <td>{show.totalSeats}</td>
-
-
-              <td>{show.availableSeats}</td>
-
-
-              <td>
-                <button onClick={() => setEditingShow(show)}>Edit</button>
-
-
-                <button onClick={() => handleDelete(show._id)}>Delete</button>
-              </td>
+      <div style={styles.tableContainer}>
+        <table style={styles.table}>
+          <thead>
+            <tr>
+              <th style={styles.th}>Movie</th>
+              <th style={styles.th}>Date</th>
+              <th style={styles.th}>Time</th>
+              <th style={styles.th}>Total Seats</th>
+              <th style={styles.th}>Available Seats</th>
+              <th style={styles.th}>Actions</th>
             </tr>
-          ))}
-        </tbody>
+          </thead>
 
-      </table>
+          <tbody>
+            {shows.map((show) => (
+              <tr key={show._id}>
+                <td style={styles.td}>
+                  {show.movieId?.title}
+                </td>
+
+                <td style={styles.td}>
+                  {new Date(show.date).toLocaleDateString()}
+                </td>
+
+                <td style={styles.td}>
+                  {show.time}
+                </td>
+
+                <td style={styles.td}>
+                  {show.totalSeats}
+                </td>
+
+                <td style={styles.td}>
+                  {show.availableSeats}
+                </td>
+
+                <td style={styles.td}>
+                  <button
+                    style={styles.editButton}
+                    onClick={() =>
+                      setEditingShow(show)
+                    }
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    style={styles.deleteButton}
+                    onClick={() =>
+                      handleDelete(show._id)
+                    }
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 }
+
+const styles = {
+  container: {
+    padding: "25px",
+    backgroundColor: "#f8fafc",
+    minHeight: "100vh",
+  },
+
+  header: {
+    marginBottom: "25px",
+  },
+
+  title: {
+    fontSize: "32px",
+    color: "#111827",
+    marginBottom: "6px",
+  },
+
+  subtitle: {
+    color: "#6b7280",
+    fontSize: "15px",
+  },
+
+  tableContainer: {
+    marginTop: "25px",
+    background: "#ffffff",
+    borderRadius: "12px",
+    overflowX: "auto",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+  },
+
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+    background: "#ffffff",
+  },
+
+  th: {
+    backgroundColor: "#1e40af",
+    color: "#ffffff",
+    padding: "14px",
+    textAlign: "left",
+    fontSize: "14px",
+  },
+
+  td: {
+    padding: "14px",
+    borderBottom: "1px solid #e5e7eb",
+    color: "#374151",
+    fontSize: "14px",
+  },
+
+  editButton: {
+    backgroundColor: "#2563eb",
+    color: "#ffffff",
+    border: "none",
+    borderRadius: "6px",
+    padding: "8px 14px",
+    cursor: "pointer",
+    marginRight: "10px",
+    fontSize: "13px",
+  },
+
+  deleteButton: {
+    backgroundColor: "#dc2626",
+    color: "#ffffff",
+    border: "none",
+    borderRadius: "6px",
+    padding: "8px 14px",
+    cursor: "pointer",
+    fontSize: "13px",
+  },
+};
