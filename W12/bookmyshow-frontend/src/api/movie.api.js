@@ -33,33 +33,8 @@ Backend
 */
 
 
-import axios from "axios";
+import api from "./axios";
 
-
-/*
-=========================================================
-AXIOS INSTANCE
-
-
-Centralizes backend communication.
-
-
-Sprint 6:
-↓
-Interceptors
-↓
-JWT Tokens
-↓
-Global Error Handling
-
-
-=========================================================
-*/
-
-
-const api = axios.create({
-  baseURL: "http://localhost:5000/api",
-});
 
 
 export async function getMovies(filters = {}) {

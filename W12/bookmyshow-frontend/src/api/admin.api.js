@@ -1,10 +1,5 @@
-// MERN_Stu_FebMay26Mys\W12\Master_bookmyshow-frontend\src\api\admin.api.js
-import axios from "axios";
+import api from "./axios";
 
-
-const api = axios.create({
-  baseURL: "http://localhost:5000/api",
-});
 
 
 /*
