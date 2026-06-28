@@ -30,7 +30,7 @@ This allows every component to access:
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 import App from "./App";
 
@@ -43,9 +43,9 @@ import { store } from "./redux/store";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <AuthProvider>
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </AuthProvider>
   </Provider>,
 );
